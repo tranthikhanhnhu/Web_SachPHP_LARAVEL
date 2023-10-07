@@ -1,0 +1,169 @@
+
+/* display none until init */
+.product-carousel{
+	display: none;
+	opacity:1!important;
+	position: relative;
+	width: 100%;
+	-ms-touch-action: pan-y;
+}
+#column-left .product-carousel, #column-right .product-carousel { display:block;}
+#column-left .customNavigation, #column-right .customNavigation { display:none;}
+
+#column-left .banners-slider-carousel .customNavigation,
+#column-right .banners-slider-carousel .customNavigation{ display:block;}
+
+.product-carousel .slider-wrapper{
+	display: none;
+	position: relative;
+	-webkit-transform: translate3d(0px, 0px, 0px);
+	-webkit-perspective: 1000;
+}
+.product-carousel .slider-wrapper-outer{
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+.product-carousel .slider-wrapper-outer.autoHeight{
+	-webkit-transition: height 500ms ease-in-out;
+	-moz-transition: height 500ms ease-in-out;
+	-ms-transition: height 500ms ease-in-out;
+	-o-transition: height 500ms ease-in-out;
+	transition: height 500ms ease-in-out;
+}
+	
+.product-carousel .slider-item{
+	float: left;
+}
+.slider-controls .slider-page,
+.slider-controls .slider-buttons div{
+	cursor: pointer;
+}
+.slider-controls {
+	-webkit-tap-highlight-color: transparent;
+}
+
+/* mouse grab icon */
+ 
+
+
+
+/* fix */
+.product-carousel  .slider-wrapper,
+.product-carousel  .slider-item{
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility:    hidden;
+	-ms-backface-visibility:     hidden;
+}
+.customNavigation{
+position: absolute;
+z-index: 95;
+width: 100%;
+top: 0;
+direction: ltr !important;
+}
+.customNavigation a{
+position: absolute;
+font-size: 20px;
+line-height: 32px;
+padding: 0 14px;
+background: #fff;
+color: #b3b3b3 !important;
+border: 1px solid #b3b3b3;
+height: 35px;
+width: 35px;
+cursor: pointer;
+overflow: hidden;
+-webkit-transition: all 0.5s ease;
+-webkit-transition-delay: 0s;
+-moz-transition: all 0.5s ease 0s;
+-o-transition: all 0.5s ease 0s;
+transition: all 0.5s ease 0s;
+border-radius: 0;
+font-weight: normal;
+letter-spacing: 0;
+}
+
+.customNavigation a.prev {
+    left:auto;
+	right:40px;
+	color:#000;
+	cursor:pointer;
+}
+.customNavigation a i {
+    font-size: 20px;
+}
+.customNavigation a:hover {
+    border-color: #9f8447;
+    color: #fff !important;
+    background-color: #9f8447;
+}
+.product-image .customNavigation a.prev {left:0; }
+.product-image .customNavigation a.next {right:0;}
+.product-image  .customNavigation{top:45px;}
+
+ 
+
+.customNavigation a.prev:hover 	{ text-decoration:none;}
+.customNavigation a.next {
+    right:0px;
+	left:auto;
+	color:#000;
+	cursor:pointer;
+}
+.customNavigation a.next:hover 	{  text-decoration:none;}
+
+.banners-slider-carousel .product-carousel{  width:auto; margin:0px; }
+
+.banners-slider-carousel .customNavigation {  
+		display:none;top:0;
+}
+
+.banners-slider-carousel:hover .customNavigation , .related-products:hover .customNavigation { 
+	opacity: 1;
+	-webkit-opacity: 1;
+	-moz-opacity: 1;
+	-khtml-opacity: 1;
+	display:block;
+	 }
+.related-products .customNavigation {
+    display: block;
+}
+.related-products .customNavigation a.next {
+right: 15px;
+left: auto;
+}
+.related-products .customNavigation a.prev { 
+left: auto;
+right: 55px;
+
+}
+
+
+.banners-slider-carousel .customNavigation a.prev {
+    cursor: pointer;
+    top: 25px;
+    z-index: 999;
+	left:0;
+	right:auto;
+}
+.banners-slider-carousel .customNavigation a.prev:hover {}
+.banners-slider-carousel .customNavigation a.next {
+	top:25px;
+	cursor:pointer;
+	z-index:999; 
+	right:0;
+	left:auto;
+}
+.banners-slider-carousel .customNavigation a.next:hover 	{ }
+
+
+/*.product-info .product-image .customNavigation    { text-align: center; width:100%; z-index:9;top:0;}
+.product-info .product-image .customNavigation a{}
+.product-info .product-image .customNavigation span { letter-spacing:0; }
+.product-info .product-image .customNavigation span.prev {}
+.product-info .product-image .customNavigation span.prev:hover 	{  text-decoration:none; background-position:0 -33px; border:1px solid #000; color:#000; }
+.product-info .product-image .customNavigation span.next {	}
+.product-info .product-image .customNavigation span.next:hover 	{text-decoration:none; background-position: -24px -33px; border:1px solid #000; color:#000; }*/
+
+
