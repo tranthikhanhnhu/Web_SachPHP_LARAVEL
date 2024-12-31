@@ -8,7 +8,7 @@ use App\Models\ProductInOrder;
 use App\Models\Publisher;
 use App\Models\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
-use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
+use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail; 
 
 
 
@@ -98,7 +98,6 @@ Breadcrumbs::for('admin.users.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.users');
     $trail->push('Create', route('admin.users.create'));
 });
-
 
 
 Breadcrumbs::for('admin.categories', function (BreadcrumbTrail $trail) {

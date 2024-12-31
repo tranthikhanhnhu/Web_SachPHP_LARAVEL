@@ -93,14 +93,14 @@
                                                 <td>
                                                     {!! $product->status === 1
                                                         ? '<span class="badge bg-success">show</span>'
-                                                        : '<span class="badge bg-danger">hidden</span>' 
+                                                        : '<span class="badge bg-danger">hidden</span>'
                                                     !!}
                                                 </td>
                                                 <td>
                                                     <a href="{{route('admin.products.show', ['product' => $product->id])}}" type="button" class="btn btn-sm btn-light">Details</a>
                                                     <a href="{{route('admin.products.edit', ['product' => $product->id])}}" type="button" class="btn btn-sm btn-secondary">Edit</a>
                                                     <form class="d-inline" action="{{route('admin.products.changeStatus', ['product' => $product->id])}}" method="POST">
-                                                        @csrf                                                            
+                                                        @csrf
                                                         @if($product->status === 1)
                                                             <input type="hidden" name="status" value="0">
                                                             <button type='submit' class='btn btn-sm btn-danger'>Hide</button>
@@ -224,7 +224,7 @@
             </div>
         </div>
         <div class="offcanvas-foorter border p-3 text-center">
-            2023 © Velzon.
+            2024 © Puyn Library.
         </div>
     </div>
 @endsection

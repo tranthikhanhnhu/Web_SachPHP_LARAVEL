@@ -43,53 +43,12 @@
 
 
     <div>
-        <div id="subbannercmsblock">
-            <div class="container">
-                <div class="row">
-                    <div class="subbaner-left col-sm-6">
-                        <div class="banner">
-                            <div class="content">
-                                <div class="image-block"></div>
-                                <div class="title">Special Products</div>
-                                <div class="button"><a href="{{route('client.products.index')}}">Shop now</a></div>
-                            </div>
-                            <div class="img"><a style="cursor: default"><img
-                                        src="{{ asset('client/image/catalog/Sub-banner-01.jpg') }}"
-                                        alt="Sub-banner-01.jpg')}}"></a></div>
-                        </div>
-                    </div>
-                    <div class="subbaner-right col-sm-3">
-                        <div class="banner">
-                            <div class="content_left">
-                                <div class="title">Bulk of Book</div>
-                                <div class="button"><a href="{{route('client.products.index')}}">view collecton</a></div>
-                            </div>
-                            <div class="img"><a style="cursor: default"><img
-                                        src="{{ asset('client/image/catalog/Sub-banner-02.jpg') }}"
-                                        alt="Sub-banner-02.jpg')}}"></a></div>
-                        </div>
-                    </div>
-                    <div class="subbaner-right col-sm-3">
-                        <div class="banner">
-                            <div class="content_right">
-                                <div class="offer">weekly</div>
-                                <div class="title">New Products</div>
-                                <div class="description">Get Free Coupon Soon</div>
-                            </div>
-                            <div class="img"><a style="cursor: default"><img
-                                        src="{{ asset('client/image/catalog/Sub-banner-03.jpg') }}"
-                                        alt="Sub-banner-02.jpg')}}"></a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="container">
         <div class="row">
         </div>
     </div>
-    <div id="content" class="col-sm-12">
+    <div id="content" style="margin-top:20px" class="col-sm-12">
         <div class="container">
             <div class="row">
                 <div class="box">
@@ -104,13 +63,30 @@
                                             <div class="image">
 
                                                 <a href="{{ route('client.products.detail', ['slug' => $product->slug]) }}">
-                                                    <img src="{{ asset("images/products/{$product->productImages->where('type', 1)->first()->image_url}") }}"
-                                                        alt="ut labore et dolore magnam aliquam quae"
-                                                        title="ut labore et dolore magnam aliquam quae"
-                                                        class="img-responsive" />
-                                                    <img class="img-responsive hover-image"
-                                                        src="{{ asset("images/products/{$product->productImages->where('type', 2)->first()->image_url}") }}"
-                                                        alt="ut labore et dolore magnam aliquam quae" />
+                                                    @php
+                                                        $image1 = $product->productImages->where('type', 1)->first();
+                                                        $image2 = $product->productImages->where('type', 2)->first();
+                                                    @endphp
+                                                    @if ($image1)
+                                                        <img src="{{ asset("images/products/{$image1->image_url}") }}"
+                                                            alt="{{ $product->name }}"
+                                                            title="{{ $product->name }}"
+                                                            class="img-responsive" />
+                                                    @else
+                                                        <img src="{{ asset("images/products/default.jpg") }}"
+                                                            alt="{{ $product->name }}"
+                                                            title="{{ $product->name }}"
+                                                            class="img-responsive" />
+                                                    @endif
+                                                    @if ($image2)
+                                                        <img class="img-responsive hover-image"
+                                                            src="{{ asset("images/products/{$image2->image_url}") }}"
+                                                            alt="{{ $product->name }}" />
+                                                    @else
+                                                        <img class="img-responsive hover-image"
+                                                            src="{{ asset("images/products/default.jpg") }}"
+                                                            alt="{{ $product->name }}" />
+                                                    @endif
                                                 </a>
 
 
@@ -133,12 +109,19 @@
 
                                                 <div class="caption">
                                                     <h4><a
-                                                            href="index9144.html?route=product/product&amp;product_id=40">{{ $product->name }}</a>
+                                                            href="{{ route('client.products.detail', ['slug' => $product->slug]) }}">{{ $product->name }}</a>
                                                     </h4>
 
 
                                                     <p class="price">
-                                                        {{ number_format($product->rentPrice->firstWhere('number_of_days', 7)->price) }}đ / 7day
+                                                        @php
+                                                            $rentPrice = $product->rentPrice->firstWhere('number_of_days', 7);
+                                                        @endphp
+                                                        @if ($rentPrice)
+                                                            {{ number_format($rentPrice->price) }}đ / 7day
+                                                        @else
+                                                            N/A
+                                                        @endif
                                                     </p>
                                                 </div>
                                             </div>
@@ -151,39 +134,16 @@
 
                         </div>
                     </div>
+                    {{
+                        $feature_products->links('client.pagination.custom', [
+                            'paginator' => $feature_products,
+                        ])
+                    }}
                 </div>
             </div>
         </div>
         <span class="featured_default_width" style="display:none; visibility:hidden"></span>
-        <div>
-            <div id="cmsblock">
-                <div class="container">
-                    <div class="row">
-                        <div class="cmsblock_inner_left">
-                            <div class="banner">
-                                <div class="img"><a href="{{route('client.products.index')}}"><img
-                                            src="{{ asset('client/image/catalog/cms_banner_01.jpg') }}"
-                                            alt="cms_banner_01.jpg')}}"></a></div>
-                                <div class="content">
-                                    <div class="title">Books are Available</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cmsblock_inner_right">
-                            <div class="banner">
-                                <div class="img"><a href="{{route('client.products.index')}}"><img
-                                            src="{{ asset('client/image/catalog/cms_banner_02.jpg') }}"
-                                            alt="cms_banner_02.jpg')}}"></a></div>
-                                <div class="content">
-                                    <div class="title">Product</div>
-                                    <div class="button"><a href="{{route('client.products.index')}}">Grab Books!!</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div>
             <div class="parallex" data-source-url="{{ asset('client/image/catalog/parallax.jpg') }}">
                 <div id="parallex_img_top" class="scrollInTop">
@@ -250,82 +210,7 @@
             </div>
         </div>
         <span class="special_default_width" style="display:none; visibility:hidden"></span>
-        <div>
-            <div class="testimonial">
-                <div class="container">
-                    <div class="row">
-                        <div class="testimonial-container" id="testimonial">
-                            <div class="testimonial_inner box">
-                                <div class="homepage-testimonial-inner products block_content">
-                                    <div class="products product-carousel box-content" id="testimonial-carousel">
-                                        <div class="slider-item">
-                                            <div class="product-block">
-                                                <div class="product-block-inner">
-                                                    <div class="image-block">
-                                                        <img src="{{ asset('client/image/catalog/test1.png') }}"
-                                                            alt="">
-                                                    </div>
-                                                    <div class="post-content-inner">
-                                                        <div class="post-description">“ Majority have suffered
-                                                            alteration in aome from, by injected humor manoj randomized
-                                                            words which dont look even slightly believable, even
-                                                            slightly believable."</div>
-                                                        <div class="post-author"><a style="cursor: default">MACK
-                                                                JECKNOWELGO</a></div>
-                                                        <div class="post"><a style="cursor: default">Web designer</a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="slider-item">
-                                            <div class="product-block">
-                                                <div class="product-block-inner">
-                                                    <div class="image-block">
-                                                        <img src="{{ asset('client/image/catalog/test2.png') }}"
-                                                            alt="">
-                                                    </div>
-                                                    <div class="post-content-inner">
-                                                        <div class="post-description">“ Majority have suffered
-                                                            alteration in aome from, by injected humor manoj randomized
-                                                            words which dont look even slightly believable, even
-                                                            slightly believable."</div>
-                                                        <div class="post-author"><a style="cursor: default">MACK
-                                                                JECKNOWELGO</a></div>
-                                                        <div class="post"><a style="cursor: default">Web designer</a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="slider-item">
-                                            <div class="product-block">
-                                                <div class="product-block-inner">
-                                                    <div class="image-block">
-                                                        <img src="{{ asset('client/image/catalog/test3.png') }}"
-                                                            alt="">
-                                                    </div>
-                                                    <div class="post-content-inner">
-                                                        <div class="post-description">“ Majority have suffered
-                                                            alteration in aome from, by injected humor manoj randomized
-                                                            words which dont look even slightly believable, even
-                                                            slightly believable."</div>
-                                                        <div class="post-author"><a style="cursor: default">MACK
-                                                                JECKNOWELGO</a></div>
-                                                        <div class="post"><a style="cursor: default">Web designer</a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="testimonial_default_width" style="display: none; visibility: hidden;">
-                                    &nbsp;
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="container">
             <div class="row">
                 <div id="carousel-0" class="banners-slider-carousel">
@@ -559,7 +444,7 @@ $(document).ready(function() {
                     text: res.message,
                 });
             },
-        }); 
+        });
     });
     $('.wishlist').on('click', function() {
         let url = $(this).data('url');
@@ -573,7 +458,7 @@ $(document).ready(function() {
                     text: res.message,
                 });
             },
-        }); 
+        });
     });
 
     function reloadViewCart(res) {

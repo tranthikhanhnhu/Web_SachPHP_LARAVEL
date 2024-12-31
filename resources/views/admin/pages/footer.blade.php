@@ -4,7 +4,7 @@
             <div class="col-sm-6">
                 <script>
                     document.write(new Date().getFullYear())
-                </script> © Velzon.
+                </script> © Puyn Library.
             </div>
             <div class="col-sm-6">
                 <div class="text-sm-end d-none d-sm-block">

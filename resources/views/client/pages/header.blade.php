@@ -8,7 +8,8 @@
                 </div>
                 <div class="content_header_right">
                     <div>
-                        <p><a href="{{route('/')}}">{{ is_null(Auth::user()) ? '' : Auth::user()->username . ',' }} Welcome to
+                        <p><a href="{{ route('/') }}">{{ is_null(Auth::user()) ? '' : Auth::user()->username . ',' }}
+                                Welcome to
                                 Store Of OurBook</a></p>
                     </div>
                 </div>
@@ -18,7 +19,7 @@
     <div class="header-top">
         <div class="container" id="my-dropdown-container">
             <div id="my-dropdown">
-                <div class="container">
+                <div  class="container">
                     <div class="row" style="padding: 0 2%">
                         <h1><b>Feature Categories</b></h1>
                     </div>
@@ -36,8 +37,11 @@
             <div class="row">
                 <div class="header-logo">
                     <div id="logo">
-                        <a href="{{ route('/') }}"><img src="{{ asset('client/image/catalog/logo.png') }}"
-                                title="Your Store" alt="Your Store" class="img-responsive" /></a>
+                        <a href="{{ route('/') }}">
+                            <h1 style="color: #3e2819">PUYN LIBRARY</h1>
+                            {{-- <img src="{{ asset('client/image/catalog/logo.png') }}"
+                                title="Your Store" alt="Your Store" class="img-responsive" /> --}}
+                        </a>
                     </div>
                 </div>
                 <nav class="col-sm-7 nav-container">
@@ -121,7 +125,8 @@
                                                 </li>
                                             @endif
                                         @else
-                                            <a href="{{route('login')}}" class="btn btn-primary">Login to view your cart</a>
+                                            <a href="{{ route('login') }}" class="btn btn-primary">Login to view your
+                                                cart</a>
                                         @endif
                                     </ul>
                                 </div>
@@ -131,7 +136,7 @@
                             <ul class="list-inline">
                                 <li class="dropdown myaccount"><a
                                         href="https://capricathemes.com/opencart/OPC01/OPC010003/OPC1/index.php?route=account/account"
-                                    title="My Account" class="dropdown-toggle" data-toggle="dropdown"> <span
+                                        title="My Account" class="dropdown-toggle" data-toggle="dropdown"> <span
                                             class="account-toggle"></span></a>
                                     <ul class="dropdown-menu dropdown-menu-right myaccount-menu">
                                         @if (!Auth::check())
@@ -139,17 +144,17 @@
                                             <li><a href="{{ route('login') }}">Login</a></li>
                                         @endif
                                         @if (!is_null(Auth::user()) && Auth::user()->level == 1)
-                                        <li><a href="{{ route('admin.index') }}">Admin page</a></li>
+                                            <li><a href="{{ route('admin.index') }}">Admin page</a></li>
                                         @endif
                                         @if (Auth::check())
-                                        <li><a href="{{ route('client.likedProducts') }}" id="wishlist-total"
-                                                title="Wish List ({{ $liked_products->count() }})">
-                                                <span class="hidden-xs">Wish List (<span
-                                                        id="like-total">{{ $liked_products->count() }}</span>)</span>
-                                            </a></li>
-                                        <li><a href="{{route('client.orderHistory')}}">Order History</a></li>
-                                        <li><a href="{{route('client.users.edit')}}">My Account</a></li>
-                                        <li><a href="{{ route('logout') }}">Logout</a></li>
+                                            <li><a href="{{ route('client.likedProducts') }}" id="wishlist-total"
+                                                    title="Wish List ({{ $liked_products->count() }})">
+                                                    <span class="hidden-xs">Wish List (<span
+                                                            id="like-total">{{ $liked_products->count() }}</span>)</span>
+                                                </a></li>
+                                            <li><a href="{{ route('client.orderHistory') }}">Order History</a></li>
+                                            <li><a href="{{ route('client.users.edit') }}">My Account</a></li>
+                                            <li><a href="{{ route('logout') }}">Logout</a></li>
                                         @endif
                                     </ul>
                                 </li>

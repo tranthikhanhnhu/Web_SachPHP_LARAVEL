@@ -7,8 +7,6 @@
             <div class="col">
 
                 <div class="h-100">
-
-
                     <div class="row">
                         <div class="col-xl-8">
                             <div class="card">

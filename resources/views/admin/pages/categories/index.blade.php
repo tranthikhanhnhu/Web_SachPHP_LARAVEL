@@ -184,7 +184,7 @@
             </div>
         </div>
         <div class="offcanvas-foorter border p-3 text-center">
-            2023 © Velzon.
+            2024 © Puyn Library.
         </div>
     </div>
 @endsection

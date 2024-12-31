@@ -36,7 +36,16 @@ Route::get('aboutUs', [InformationController::class, 'aboutUs'])->name('aboutUs'
 Route::prefix('admin')->middleware(['checkLogin', 'isAdmin', 'checkStatus'])->name('admin.')->group(function() {
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::get('/index', [AdminController::class, 'index']);
-    
+    Route::get('/vnIndex', [AdminController::class, 'vnIndex']);
+
+
+    Route::prefix('users')->controller(UsersController::class)->name('users.')->group(function() {
+        Route::post('/changeStatus/{user}', 'changeStatus')->name('changeStatus');
+        Route::get('/vnIndex', [UsersController::class, 'vnIndex']);
+        Route::get('/vnCreate', [UsersController::class, 'vnCreate']);
+        Route::get('/vnShow', [UsersController::class, 'vnShow']);
+        Route::get('/vnEdit', [UsersController::class, 'vnEdit']);
+    });
 
     Route::resource('users', UsersController::class);
     Route::prefix('users')->controller(UsersController::class)->name('users.')->group(function() {
@@ -47,11 +56,31 @@ Route::prefix('admin')->middleware(['checkLogin', 'isAdmin', 'checkStatus'])->na
         Route::get('/order_detail/{order}', 'orderDetail')->name('order_detail');
         Route::get('/changeStatus/{productInOrder}/{status}/{returnedAll?}', 'changeStatus')->name('changeStatus');
     });
-    
+
+    Route::prefix('categories')->controller(CategoriesController::class)->name('categories.')->group(function() {
+        Route::post('/changeStatus/{category}', 'changeStatus')->name('changeStatus');
+        Route::post('/getSlug', 'getSlug')->name('getSlug');
+        Route::get('/vnIndex', [CategoriesController::class, 'vnIndex']);
+        Route::get('/vnCreate', [CategoriesController::class, 'vnCreate']);
+        Route::get('/vnShow', [CategoriesController::class, 'vnShow']);
+        Route::get('/vnEdit', [CategoriesController::class, 'vnEdit']);
+    });
+
     Route::resource('products', ProductsController::class);
     Route::prefix('categories')->controller(CategoriesController::class)->name('categories.')->group(function() {
         Route::post('/changeStatus/{category}', 'changeStatus')->name('changeStatus');
         Route::post('/getSlug', 'getSlug')->name('getSlug');
+    });
+
+    Route::prefix('products')->controller(ProductsController::class)->name('products.')->group(function() {
+        Route::post('/changeStatus/{product}', 'changeStatus')->name('changeStatus');
+        Route::post('/getSlug', 'getSlug')->name('getSlug');
+        Route::post('/getRentPrices', 'getRentPrices')->name('getRentPrices');
+        Route::get('/deleteReview/{review}', 'deleteReview')->name('deleteReview');
+        Route::get('/vnIndex', [ProductsController::class, 'vnIndex']);
+        Route::get('/vnCreate', [ProductsController::class, 'vnCreate']);
+        Route::get('/vnShow', [ProductsController::class, 'vnShow']);
+        Route::get('/vnEdit', [ProductsController::class, 'vnEdit']);
     });
 
     Route::resource('categories', CategoriesController::class);
@@ -60,12 +89,35 @@ Route::prefix('admin')->middleware(['checkLogin', 'isAdmin', 'checkStatus'])->na
         Route::post('/getSlug', 'getSlug')->name('getSlug');
         Route::post('/getRentPrices', 'getRentPrices')->name('getRentPrices');
         Route::get('/deleteReview/{review}', 'deleteReview')->name('deleteReview');
+        Route::get('/vnIndex', [ProductsController::class, 'vnIndex']);
+        Route::get('/vnCreate', [ProductsController::class, 'vnCreate']);
+        Route::get('/vnShow', [ProductsController::class, 'vnShow']);
+        Route::get('/vnEdit', [ProductsController::class, 'vnEdit']);
+    });
+
+
+    Route::prefix('publishers')->controller(PublishersController::class)->name('publishers.')->group(function() {
+        Route::post('/changeStatus/{publisher}', 'changeStatus')->name('changeStatus');
+        Route::post('/getSlug', 'getSlug')->name('getSlug');
+        Route::get('/vnIndex', [PublishersController::class, 'vnIndex']);
+        Route::get('/vnCreate', [PublishersController::class, 'vnCreate']);
+        Route::get('/vnShow', [PublishersController::class, 'vnShow']);
+        Route::get('/vnEdit', [PublishersController::class, 'vnEdit']);
     });
 
     Route::resource('publishers', PublishersController::class);
     Route::prefix('publishers')->controller(PublishersController::class)->name('publishers.')->group(function() {
         Route::post('/changeStatus/{publisher}', 'changeStatus')->name('changeStatus');
         Route::post('/getSlug', 'getSlug')->name('getSlug');
+    });
+
+    Route::prefix('origins')->controller(OriginsController::class)->name('origins.')->group(function() {
+        Route::post('/changeStatus/{origin}', 'changeStatus')->name('changeStatus');
+        Route::post('/getSlug', 'getSlug')->name('getSlug');
+        Route::get('/vnIndex', [OriginsController::class, 'vnIndex']);
+        Route::get('/vnCreate', [OriginsController::class, 'vnCreate']);
+        Route::get('/vnShow', [OriginsController::class, 'vnShow']);
+        Route::get('/vnEdit', [OriginsController::class, 'vnEdit']);
     });
 
     Route::resource('origins', OriginsController::class);

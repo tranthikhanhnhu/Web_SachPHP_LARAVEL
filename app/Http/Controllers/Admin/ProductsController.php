@@ -71,6 +71,52 @@ class ProductsController extends Controller
             'origins' => $origins
         ]);
     }
+
+    public function vnIndex()
+    {
+        $orderBy = [];
+
+        if (!is_null(request()->sort_by)) {
+            switch (request()->sort_by) {
+                case 0:
+                    $orderBy = ['created_at', 'desc'];
+                    break;
+                case 1:
+                    $orderBy = ['created_at', 'asc'];
+                    break;
+            }
+        }
+
+        $pipelines = [
+            ByKeyword::class,
+            ByStatus::class,
+            ByOrigins::class,
+            ByCategory::class,
+            ByPublishers::class,
+        ];
+
+        $pipeline = Pipeline::send(Product::query())
+            ->through($pipelines)
+            ->thenReturn();
+
+        if ($orderBy) {
+            $products = $pipeline->orderBy($orderBy[0], $orderBy[1])->paginate(10);
+        } else {
+            $products = $pipeline->paginate(10);
+        }
+
+        $categories = Category::where('status', 1)->get();
+        $publishers = Publisher::where('status', 1)->get();
+        $origins = Origin::where('status', 1)->get();
+
+        return view('admin.vn_pages.products.index', [
+            'products' => $products,
+            'categories' => $categories,
+            'publishers' => $publishers,
+            'origins' => $origins
+        ]);
+    }
+
     public function store(StoreProductRequest $request)
     {
 
@@ -110,6 +156,19 @@ class ProductsController extends Controller
             'publishers' => $publishers,
         ]);
     }
+
+    public function vnCreate()
+    {
+        $origins = Origin::where('status', 1)->get();
+        $publishers = Publisher::where('status', 1)->get();
+        $categories = Category::where('status', 1)->get();
+        return view('admin.vn_pages.products.create', [
+            'categories' => $categories,
+            'origins' => $origins,
+            'publishers' => $publishers,
+        ]);
+    }
+
     public function show(Product $product)
     {
 
@@ -120,6 +179,18 @@ class ProductsController extends Controller
             'reviews' => $reviews,
         ]);
     }
+
+    public function vnShow(Product $product)
+    {
+
+        $reviews = Review::where('product_id', $product->id)->paginate(10);
+
+        return view('admin.vn_pages.products.show', [
+            'product' => $product,
+            'reviews' => $reviews,
+        ]);
+    }
+
     public function update(UpdateProductRequest $request, Product $product)
     {
 
@@ -191,6 +262,20 @@ class ProductsController extends Controller
         ]);
     }
 
+    public function vnEdit(Product $product)
+    {
+        $origins = Origin::where('status', 1)->get();
+        $publishers = Publisher::where('status', 1)->get();
+        $categories = Category::all();
+
+        return view('admin.vn_pages.products.edit', [
+            'product' => $product,
+            'categories' => $categories,
+            'origins' => $origins,
+            'publishers' => $publishers,
+        ]);
+    }
+
     public function changeStatus(Request $request, Product $product)
     {
         $check = $product->update([
@@ -254,7 +339,7 @@ class ProductsController extends Controller
             ->where('product_id', $productId)
             ->delete();
         }
-        
+
         // create in database
         ProductImage::create([
             'product_id' => $productId,

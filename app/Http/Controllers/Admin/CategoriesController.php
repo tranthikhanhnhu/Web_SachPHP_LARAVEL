@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 class CategoriesController extends Controller
 {
     //
-    public function index() { 
+    public function index() {
 
         $orderBy = [];
 
@@ -51,6 +51,44 @@ class CategoriesController extends Controller
             'categories' => $categories,
         ]);
     }
+
+    //
+    public function vnIndex() {
+
+        $orderBy = [];
+
+        if(!is_null(request()->sort_by)) {
+            switch (request()->sort_by) {
+                case 0:
+                    $orderBy = ['created_at', 'desc'];
+                    break;
+                case 1:
+                    $orderBy = ['created_at', 'asc'];
+                    break;
+            }
+        }
+
+        $pipelines = [
+            ByKeyword::class,
+            ByStatus::class,
+        ];
+
+        $pipeline = Pipeline::send(Category::query())
+        ->through($pipelines)
+        ->thenReturn();
+
+
+        if($orderBy) {
+            $categories = $pipeline->orderBy($orderBy[0], $orderBy[1])->paginate(10);
+        } else {
+            $categories = $pipeline->paginate(10);
+        }
+
+        return view('admin.vn_pages.categories.index', [
+            'categories' => $categories,
+        ]);
+    }
+
     public function store(StoreCategoryRequest $request) {
 
 
@@ -62,21 +100,34 @@ class CategoriesController extends Controller
         ]);
 
         $msg = $check
-        ? '<div class="alert alert-success alert-dismissible">Category created successfully</div>' 
+        ? '<div class="alert alert-success alert-dismissible">Category created successfully</div>'
         : '<div class="alert alert-danger alert-dismissible">Category created failed</div>';
 
         return redirect()->route('admin.categories.index')->with('message', $msg);
     }
-    public function create() {
-        return view('admin.pages.categories.create');
+
+    public function vnCreate() {
+        return view('admin.vn_pages.categories.create');
     }
+
+    public function create() {
+        return view('admin.vn_pages.categories.create');
+    }
+
     public function show(Category $category) {
         return view('admin.pages.categories.show', [
             'category' => $category
         ]);
     }
+
+    public function vnShow(Category $category) {
+        return view('admin.vn_pages.categories.show', [
+            'category' => $category
+        ]);
+    }
+
     public function update(UpdateCategoryRequest $request, Category $category) {
-    
+
         $update_category = $category->update([
             'name' => $request->name,
             'slug' => $request->slug,
@@ -84,8 +135,8 @@ class CategoriesController extends Controller
             'updated_at' => Carbon::now(),
         ]);
 
-        $msg = $update_category 
-        ? '<div class="alert alert-success alert-dismissible">Category updated successfully</div>' 
+        $msg = $update_category
+        ? '<div class="alert alert-success alert-dismissible">Category updated successfully</div>'
         : '<div class="alert alert-danger alert-dismissible">Category updated failed</div>';
 
         return redirect()->route('admin.categories.index')->with('message', $msg);
@@ -95,14 +146,18 @@ class CategoriesController extends Controller
         $check = $category->delete();
 
         $msg = $check
-        ? '<div class="alert alert-success alert-dismissible">Category deleted successfully</div>' 
+        ? '<div class="alert alert-success alert-dismissible">Category deleted successfully</div>'
         : '<div class="alert alert-danger alert-dismissible">Category delete failed</div>';
 
         return redirect()->route('admin.categories.index')->with('message', $msg);
-        
+
     }
     public function edit(Category $category) {
         return view('admin.pages.categories.edit', ['category' => $category]);
+    }
+
+    public function vnEdit(Category $category) {
+        return view('admin.vn_pages.categories.edit', ['category' => $category]);
     }
 
     public function changeStatus(Request $request, Category $category) {
@@ -116,7 +171,7 @@ class CategoriesController extends Controller
         } else {
             $msg = '<div class="alert alert-danger alert-dismissible">Category ' . $status_word . ' failed</div>';
         }
-    
+
         return redirect()->back()->with('message', $msg);
     }
 

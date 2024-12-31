@@ -51,6 +51,43 @@ class PublishersController extends Controller
             'publishers' => $publishers,
         ]);
     }
+
+    public function vnIndex() { 
+
+        $orderBy = [];
+
+        if(!is_null(request()->sort_by)) {
+            switch (request()->sort_by) {
+                case 0:
+                    $orderBy = ['created_at', 'desc'];
+                    break;
+                case 1:
+                    $orderBy = ['created_at', 'asc'];
+                    break;
+            }
+        }
+
+        $pipelines = [
+            ByKeyword::class,
+            ByStatus::class,
+        ];
+
+        $pipeline = Pipeline::send(Publisher::query())
+        ->through($pipelines)
+        ->thenReturn();
+
+
+        if($orderBy) {
+            $publishers = $pipeline->orderBy($orderBy[0], $orderBy[1])->paginate(10);
+        } else {
+            $publishers = $pipeline->paginate(10);
+        }
+
+        return view('admin.vn_pages.publishers.index', [
+            'publishers' => $publishers,
+        ]);
+    }
+
     public function store(Request $request) {
 
 
@@ -73,11 +110,21 @@ class PublishersController extends Controller
     public function create() {
         return view('admin.pages.publishers.create');
     }
+    public function vnCreate() {
+        return view('admin.vn_pages.publishers.create');
+    }
+
     public function show(Publisher $publisher) {
         return view('admin.pages.publishers.show', [
             'publisher' => $publisher
         ]);
     }
+    public function vnShow(Publisher $publisher) {
+        return view('admin.vn_pages.publishers.show', [
+            'publisher' => $publisher
+        ]);
+    }
+
     public function update(Request $request, Publisher $publisher) {
 
         $request->validate([
@@ -107,6 +154,10 @@ class PublishersController extends Controller
     }
     public function edit(Publisher $publisher) {
         return view('admin.pages.publishers.edit', ['publisher' => $publisher]);
+    }
+
+    public function vnEdit(Publisher $publisher) {
+        return view('admin.vn_pages.publishers.edit', ['publisher' => $publisher]);
     }
 
     public function changeStatus(Request $request, Publisher $publisher) {

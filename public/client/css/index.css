@@ -24,11 +24,11 @@
     transition: 0.3s;
 }
 .rent-buy-switch:hover {
-  background-color: #9f8447;
+  background-color: #b09e99;
 }
 
 .rent-buy-switch.active {
-  background-color: #9f8447;
+  background-color: #b09e99;
 }
 
 #rent-buy-switch-container {
@@ -97,7 +97,7 @@
 	width: 80%;
   height: 30px;
   padding: 10px 5px;
-  float: left;   
+  float: left;
   font: 20px;
   border: 0;
   background: #fff;
@@ -111,7 +111,7 @@
 .search-wrapper button {
   overflow: visible;
   float: right;
-  border: 2px solid #9f8447;
+  border: 2px solid #b09e99;
   padding: 0;
   cursor: pointer;
   height: 30px;
@@ -120,21 +120,21 @@
   font: 12px/40px;
   color: #fff;
   text-transform: uppercase;
-  background: #9f8447;
+  background: #b09e99;
   border-radius: 5px;
   transition: 0.2s;
-}  
+}
 
-.search-wrapper button:hover{    
+.search-wrapper button:hover{
     background: #fff;
-    color: #9f8447;
-    border: 2px solid #9f8447;
-}  
+    color: #b09e99;
+    border: 2px solid #b09e99;
+}
 
 .search-wrapper button:active,
-.search-wrapper button:focus{  
-  background: #9f8447;
-  outline: 0;  
+.search-wrapper button:focus{
+  background: #b09e99;
+  outline: 0;
 }
 
 .search-wrapper button:focus:before,

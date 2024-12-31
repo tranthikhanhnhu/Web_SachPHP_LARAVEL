@@ -54,7 +54,7 @@
                                     <input type="password" name="password" value="" placeholder="Password"
                                         id="input-password" class="form-control" />
                                 </div>
-                                <input type="submit" value="Login" class="btn btn-primary" />
+                                <input type="submit" id="submit-login" value="Login" class="btn btn-primary" />
                             </form>
                         </div>
                     </div>

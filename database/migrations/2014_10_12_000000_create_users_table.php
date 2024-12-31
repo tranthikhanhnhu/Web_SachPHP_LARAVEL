@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('username', 255)->unique();
             $table->string('email', 255)->unique();
             $table->string('password');
-            $table->tinyInteger('level'); // 0:admin; 1:client
+            $table->tinyInteger('level'); // 1:admin; 0:client
             $table->tinyInteger('status'); // 0:blocked; 1:active
             $table->rememberToken();
             $table->string('phone_number', 10)->unique();

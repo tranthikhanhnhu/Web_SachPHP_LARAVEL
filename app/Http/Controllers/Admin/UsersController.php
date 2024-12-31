@@ -59,6 +59,43 @@ class UsersController extends Controller
         return view('admin.pages.users.index', ['users' => $users]);
     }
 
+    //
+    public function vnIndex() {
+
+        $orderBy = [];
+
+        if(!is_null(request()->sort_by)) {
+            switch (request()->sort_by) {
+                case 0:
+                    $orderBy = ['created_at', 'desc'];
+                    break;
+                case 1:
+                    $orderBy = ['created_at', 'asc'];
+                    break;
+            }
+        }
+
+        $pipelines = [
+            ByKeyword::class,
+            ByGender::class,
+            ByLevel::class,
+            ByStatus::class,
+        ];
+
+        $pipeline = Pipeline::send(User::query())
+        ->through($pipelines)
+        ->thenReturn();
+
+
+        if($orderBy) {
+            $users = $pipeline->orderBy('users.'.$orderBy[0], $orderBy[1])->paginate(10);
+        } else {
+            $users = $pipeline->paginate(10);
+        }
+
+        return view('admin.vn_pages.users.index', ['users' => $users]);
+    }
+
     public function store(StoreUserRequest $request) {
 
         $user = User::create([
@@ -88,6 +125,9 @@ class UsersController extends Controller
     public function create() {
         return view('admin.pages.users.create');
     }
+    public function vnCreate() {
+        return view('admin.vn_pages.users.create');
+    }
 
     public function show(User $user) {
         
@@ -103,6 +143,25 @@ class UsersController extends Controller
         $orders = $pipeline->where('user_id', $user->id)->paginate(10);
 
         return view('admin.pages.users.show', [
+            'user' => $user,
+            'orders' => $orders,
+        ]);
+    }
+
+    public function vnShow(User $user) {
+        
+        $pipelines = [
+            ByActive::class,
+        ];
+
+        $pipeline = Pipeline::send(Order::query())
+        ->through($pipelines)
+        ->thenReturn();
+
+
+        $orders = $pipeline->where('user_id', $user->id)->paginate(10);
+
+        return view('admin.vn_pages.users.show', [
             'user' => $user,
             'orders' => $orders,
         ]);
@@ -159,6 +218,9 @@ class UsersController extends Controller
 
     public function edit(User $user) {
         return view('admin.pages.users.edit1', ['user' => $user]);
+    }
+    public function vnEdit(User $user) {
+        return view('admin.vn_pages.users.edit1', ['user' => $user]);
     }
 
     public function changeStatus(Request $request, User $user) {

@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Pipeline;
 class ProductsController extends Controller
 {
     //
-    public function index() {
+     public function index() {
 
         $number_rent_price_days = request()->number_rent_price_days ?? 7;
 
@@ -34,7 +34,7 @@ class ProductsController extends Controller
 
         if (!is_null(request()->category)) {
             $categoryId = Category::firstWhere('slug', request()->category)->id;
-    
+
             $publishers = Publisher::where('status', 1)->whereHas('products.categories', function ($query) use ($categoryId) {
                 $query->where('category_id', $categoryId);
             })->get();
@@ -107,14 +107,16 @@ class ProductsController extends Controller
 
         $category = request()->category;
 
-        foreach($allProducts as $product) {
-            $rentPrices[] = $product->rentPrice->firstWhere('number_of_days', $number_rent_price_days)->price;
-        }
-        
-        if ($rentPrices) {
-            $maxPrice = max($rentPrices);
-            $minPrice = min($rentPrices);
-        }
+        // $rentPrices = [];
+
+        // foreach($allProducts as $product) {
+        //     $rentPrices[] = $product->rentPrice->firstWhere('number_of_days', $number_rent_price_days)->price;
+        // }
+
+        // if ($rentPrices) {
+        //     $maxPrice = max($rentPrices);
+        //     $minPrice = min($rentPrices);
+        // }
 
         return view('client.pages.products.products', [
             'products' => $products,
@@ -128,7 +130,7 @@ class ProductsController extends Controller
     }
 
     public function detail($slug) {
-        
+
         $product = $this->getProductBySlug($slug);
 
         $product_categories = $product->categories()->pluck('category_id');
@@ -146,7 +148,7 @@ class ProductsController extends Controller
         ];
 
         $ordered_statuses = array_merge($bought_statuses, [ProductInOrder::STATUS_WAIT_FOR_PICK_UP]);
-    
+
         if(Auth::check()
         && Order::where('user_id', Auth::user()->id)
         ->whereHas('productsInOrder', function($query) use ($bought_statuses, $product) {
@@ -165,7 +167,7 @@ class ProductsController extends Controller
         } else {
             $user_ordered_this_product = false;
         }
-    
+
         return view('client.pages.product_detail.product_detail', [
             'product' => $product,
             'related_products' => $related_products,
@@ -183,7 +185,7 @@ class ProductsController extends Controller
     }
 
     public function postReview(Request $request) {
-        
+
         $review = Review::create([
             'user_name' => $request->user_name,
             'user_id' => $request->user_id,

@@ -69,7 +69,8 @@
                                                         value="{{ $publisher->slug }}"
                                                         @if (request()->publishers && in_array($publisher->slug, request()->publishers)) checked @endif />
                                                     {{ $publisher->name }}
-                                                    ({{ $all_products->where('publisher_id', $publisher->id)->count() }}) </label>
+                                                    ({{ $all_products->where('publisher_id', $publisher->id)->count() }})
+                                                </label>
                                             </div>
                                         @endforeach
                                     </div>
@@ -85,7 +86,8 @@
                                                     <input type="checkbox" name="origins[]" value="{{ $origin->slug }}"
                                                         @if (request()->origins && in_array($origin->slug, request()->origins)) checked @endif />
                                                     {{ $origin->name }}
-                                                    ({{ $all_products->where('origin_id', $origin->id)->count() }}) </label>
+                                                    ({{ $all_products->where('origin_id', $origin->id)->count() }})
+                                                </label>
                                             </div>
                                         @endforeach
                                     </div>
@@ -182,24 +184,15 @@
                             </div>
                             <div class="col-md-3 text-right sort">
                                 <select id="input-sort" class="form-control" onchange="location = this.value;">
-                                    <option
-                                        value="0"
-                                        @if((int)request()->sort_by === 0) selected @endif>Default</option>
-                                    <option
-                                        value="1"
-                                        @if(request()->sort_by == 1) selected @endif>
+                                    <option value="0" @if ((int) request()->sort_by === 0) selected @endif>Default
+                                    </option>
+                                    <option value="1" @if (request()->sort_by == 1) selected @endif>
                                         Name (A - Z)</option>
-                                    <option
-                                        value="2"
-                                        @if(request()->sort_by == 2) selected @endif>
+                                    <option value="2" @if (request()->sort_by == 2) selected @endif>
                                         Name (Z - A)</option>
-                                    <option
-                                        value="3"
-                                        @if(request()->sort_by == 3) selected @endif>
+                                    <option value="3" @if (request()->sort_by == 3) selected @endif>
                                         Price (Low &gt; High)</option>
-                                    <option
-                                        value="4"
-                                        @if(request()->sort_by == 4) selected @endif>
+                                    <option value="4" @if (request()->sort_by == 4) selected @endif>
                                         Price (High &gt; Low)</option>
                                 </select>
                             </div>
@@ -210,16 +203,16 @@
                             </div>
                             <div class="col-md-2 text-right limit">
                                 <select id="input-limit" class="form-control" onchange="location = this.value;">
-                                    <option value="7" @if(request()->number_rent_price_days == 7) selected @endif>
+                                    <option value="7" @if (request()->number_rent_price_days == 7) selected @endif>
                                         7 day price
                                     </option>
-                                    <option value="1" @if(request()->number_rent_price_days == 1) selected @endif>
+                                    <option value="1" @if (request()->number_rent_price_days == 1) selected @endif>
                                         1 day price
                                     </option>
-                                    <option value="30" @if(request()->number_rent_price_days == 30) selected @endif>
+                                    <option value="30" @if (request()->number_rent_price_days == 30) selected @endif>
                                         30 day price
                                     </option>
-                                    <option value="90" @if(request()->number_rent_price_days == 90) selected @endif>
+                                    <option value="90" @if (request()->number_rent_price_days == 90) selected @endif>
                                         90 day price
                                     </option>
                                 </select>
@@ -236,13 +229,24 @@
                                     <div class="product-block-inner">
                                         <div class="image">
                                             <a href="{{ route('client.products.detail', ['slug' => $product->slug]) }}">
-                                                <img src='{{ asset("images/products/{$product->productImages->firstWhere('type', 1)->image_url}") }}'
-                                                    alt="architecto beatae vitae dicta sunt explic"
-                                                    title="architecto beatae vitae dicta sunt explic"
-                                                    class="img-responsive" />
-                                                <img class="img-responsive hover-image"
-                                                    src="{{ asset("images/products/{$product->productImages->firstWhere('type', 2)->image_url}") }}"
-                                                    alt="architecto beatae vitae dicta sunt explic" />
+                                                @if ($product->productImages->firstWhere('type', 1))
+                                                    <img src="{{ asset("images/products/{$product->productImages->firstWhere('type', 1)->image_url}") }}"
+                                                        alt="architecto beatae vitae dicta sunt explic"
+                                                        title="architecto beatae vitae dicta sunt explic"
+                                                        class="img-responsive" />
+                                                    <img class="img-responsive hover-image"
+                                                        src="{{ asset("images/products/{$product->productImages->firstWhere('type', 2)->image_url}") }}"
+                                                        alt="architecto beatae vitae dicta sunt explic" />
+                                                @else
+                                                    <img src="{{ asset("images/products/OIP.jpg}") }}"
+                                                        alt="architecto beatae vitae dicta sunt explic"
+                                                        title="architecto beatae vitae dicta sunt explic"
+                                                        class="img-responsive" />
+                                                    <img class="img-responsive hover-image"
+                                                        src="{{ asset("images/products/OIP.jpg}") }}"
+                                                        alt="architecto beatae vitae dicta sunt explic" />
+                                                @endif
+
                                             </a>
                                             <div class="button-group grid">
                                                 @if (Auth::check())
@@ -250,11 +254,12 @@
                                                         title="Add to Wish List"
                                                         data-url="{{ route('client.addToLikedProducts', ['productId' => $product->id]) }}"><i
                                                             class="fa fa-heart"></i></button>
-                                                    @if($product->quantity > 0)
-                                                    <button class="addtocart" type="button" data-toggle="tooltip"
-                                                        title="Add to Cart"
-                                                        data-url="{{ route('client.addToCart', ['productId' => $product->id]) }}"><i
-                                                            class="fa fa-cart-plus"></i><span>Add to Cart</span></button>
+                                                    @if ($product->quantity > 0)
+                                                        <button class="addtocart" type="button" data-toggle="tooltip"
+                                                            title="Add to Cart"
+                                                            data-url="{{ route('client.addToCart', ['productId' => $product->id]) }}"><i
+                                                                class="fa fa-cart-plus"></i><span>Add to
+                                                                Cart</span></button>
                                                     @endif
                                                 @endif
                                             </div>
@@ -270,12 +275,18 @@
                                                     <a
                                                         href="{{ route('client.products.detail', ['slug' => $product->slug]) }}">{{ $product->name }}</a>
                                                 </h4>
-                                                <p class="desc">{{$product->short_description}}</p>
+                                                <p class="desc">{{ $product->short_description }}</p>
 
                                                 <p class="price">
-                                                    <span
-                                                        class="price-new">{{ number_format($product->rentPrice->firstWhere('number_of_days', request()->number_rent_price_days ?? 7)->price) }}đ</span>
-                                                    / {{request()->number_rent_price_days ?? 7}}day
+                                                    @php
+                                                        $rentPrice = $product->rentPrice->firstWhere('number_of_days', request()->number_rent_price_days ?? 7);
+                                                    @endphp
+                                                    @if ($rentPrice)
+                                                        <span class="price-new">{{ number_format($rentPrice->price) }}đ</span>
+                                                        / {{ request()->number_rent_price_days ?? 7 }}day
+                                                    @else
+                                                        <span class="price-new">N/A</span>
+                                                    @endif
                                                     <span class="price-tax">Ex Tax: $90.00</span>
                                                 </p>
 
@@ -284,22 +295,26 @@
 
                                             <div class="list-right">
                                                 <p class="price">
-                                                    <span
-                                                        class="price-new">{{ number_format($product->rentPrice->firstWhere('number_of_days', request()->number_rent_price_days ?? 7)->price) }}đ</span>
-                                                    / {{request()->number_rent_price_days ?? 7}}day
-                                                </p>
-                                                @if(Auth::check())
-                                                <div class="button-group list">
-                                                    <button type="button" class="wishlist" data-toggle="tooltip"
-                                                        title="Add to Wish List" onclick="wishlist.add('30');"><i
-                                                            class="fa fa-heart"></i></button>
-                                                    @if($product->quantity > 0)
-                                                    <button class="addtocart" type="button"
-                                                        data-url="{{ route('client.addToCart', ['productId' => $product->id]) }}"
-                                                        title="Add to Cart"><i class="fa fa-cart-plus"></i><span>Add to
-                                                            Cart</span></button>
+                                                    @if ($rentPrice)
+                                                        <span class="price-new">{{ number_format($rentPrice->price) }}đ</span>
+                                                        / {{ request()->number_rent_price_days ?? 7 }}day
+                                                    @else
+                                                        <span class="price-new">N/A</span>
                                                     @endif
-                                                </div>
+                                                </p>
+                                                @if (Auth::check())
+                                                    <div class="button-group list">
+                                                        <button type="button" class="wishlist" data-toggle="tooltip"
+                                                            title="Add to Wish List" onclick="wishlist.add('30');"><i
+                                                                class="fa fa-heart"></i></button>
+                                                        @if ($product->quantity > 0)
+                                                            <button class="addtocart" type="button"
+                                                                data-url="{{ route('client.addToCart', ['productId' => $product->id]) }}"
+                                                                title="Add to Cart"><i
+                                                                    class="fa fa-cart-plus"></i><span>Add to
+                                                                    Cart</span></button>
+                                                        @endif
+                                                    </div>
                                                 @endif
                                             </div>
                                         </div>
@@ -409,7 +424,8 @@
             });
             $('#amount_start').val($('#slider-range').slider("values", 0));
             $('#amount_end').val($('#slider-range').slider("values", 1));
-            $("#amount").val($("#slider-range").slider("values", 0) + "đ" + " - " + $("#slider-range").slider("values", 1) + "đ");
+            $("#amount").val($("#slider-range").slider("values", 0) + "đ" + " - " + $("#slider-range").slider(
+                "values", 1) + "đ");
         })
     </script>
 @endsection

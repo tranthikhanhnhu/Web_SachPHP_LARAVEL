@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Smart BookStore</title>
+    <title>Puyn Library</title>
     <base />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -14,7 +14,7 @@
     <link href="{{asset('client/css/font-awesome/client/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('client/css/fonts.googleapis.com/css6641.css')}}?family=PT+Serif:400,400i" rel="stylesheet">
     <link href="{{asset('client/css/fonts.googleapis.com/css79d8.css')}}?family=Oswald:400,700" rel="stylesheet">
-    
+
     <link rel="stylesheet" type="text/css" href="{{asset('client/css/caprica/carousel.css')}}" />
     <link rel="stylesheet" type="textv/css" href="{{asset('client/css/caprica/custom.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('client/css/caprica/lightbox.css')}}" />
@@ -22,9 +22,9 @@
     <link rel="stylesheet" type="text/css" href="{{asset('client/css/caprica/search_suggestion.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('client/js/jquery/magnific/magnific-popup.css')}}" />
     <link href="{{asset('client/css/stylesheet.css')}}" rel="stylesheet">
-    
-    
-    
+
+
+
     <link href="{{asset('client/js/jquery/magnific/magnific-popup.css')}}" type="text/css" rel="stylesheet" media="screen" />
     <link href="{{asset('client/js/search_suggestion/jquery-ui.html')}}" type="text/css" rel="stylesheet" media="screen" />
 
@@ -57,10 +57,10 @@
     <script src="{{asset('client/js/caprica/parallex.js')}}"></script>
     <script src="{{asset('client/js/jquery/magnific/jquery.magnific-popup.min.js')}}"></script>
     <!-- Caprica End -->
-    
+
     <script src="{{asset('client/js/common.js')}}"></script>
     <link rel="icon" href="{{asset('client/image/catalog/cart.png')}}"/>
-    
+
     <script src="{{asset('client/js/jquery/magnific/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('client/js/jquery/datetimepicker/moment.js')}}"></script>
     <script src="{{asset('client/js/jquery/datetimepicker/bootstrap-datetimepicker.min.js')}}"></script>
@@ -72,7 +72,7 @@
 
     <!-- Jquery ui -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+
 </head>
 
 
@@ -80,7 +80,7 @@
 
     @include('client.pages.header')
 
-    
+
     @yield('content')
 
 

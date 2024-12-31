@@ -15,7 +15,8 @@ class Order extends Model
         'user_id',
         'total',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'status_order'
     ];
 
     public $timestamps = false;

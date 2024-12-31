@@ -51,6 +51,43 @@ class OriginsController extends Controller
             'origins' => $origins,
         ]);
     }
+
+    public function vnIndex() { 
+
+        $orderBy = [];
+
+        if(!is_null(request()->sort_by)) {
+            switch (request()->sort_by) {
+                case 0:
+                    $orderBy = ['created_at', 'desc'];
+                    break;
+                case 1:
+                    $orderBy = ['created_at', 'asc'];
+                    break;
+            }
+        }
+
+        $pipelines = [
+            ByKeyword::class,
+            ByStatus::class,
+        ];
+
+        $pipeline = Pipeline::send(Origin::query())
+        ->through($pipelines)
+        ->thenReturn();
+
+
+        if($orderBy) {
+            $origins = $pipeline->orderBy($orderBy[0], $orderBy[1])->paginate(10);
+        } else {
+            $origins = $pipeline->paginate(10);
+        }
+
+        return view('admin.vn_pages.origins.index', [
+            'origins' => $origins,
+        ]);
+    }
+
     public function store(Request $request) {
 
         $request->validate([
@@ -72,11 +109,21 @@ class OriginsController extends Controller
     public function create() {
         return view('admin.pages.origins.create');
     }
+    public function vnCreate() {
+        return view('admin.vn_pages.origins.create');
+    }
+
     public function show(Origin $origin) {
         return view('admin.pages.origins.show', [
             'origin' => $origin
         ]);
     }
+    public function vnShow(Origin $origin) {
+        return view('admin.vn_pages.origins.show', [
+            'origin' => $origin
+        ]);
+    }
+
     public function update(Request $request, Origin $origin) {
         
         $request->validate([
@@ -106,6 +153,9 @@ class OriginsController extends Controller
     }
     public function edit(Origin $origin) {
         return view('admin.pages.origins.edit', ['origin' => $origin]);
+    }
+    public function vnEdit(Origin $origin) {
+        return view('admin.vn_pages.origins.edit', ['origin' => $origin]);
     }
 
     public function changeStatus(Request $request, Origin $origin) {
